@@ -1,0 +1,825 @@
+{
+  "datasets": [
+    {
+      "name": "58a6808d",
+      "displayName": "kpi_summary",
+      "queryLines": [
+        "SELECT\r\n",
+        "  ROUND(AVG(avg_actual_power_kw), 2) AS avg_actual_power_kw,\r\n",
+        "  ROUND(AVG(avg_baseline_power_kw), 2) AS avg_baseline_power_kw,\r\n",
+        "  ROUND(AVG(avg_power_saving_pct), 2) AS avg_power_saving_pct,\r\n",
+        "  ROUND(SUM(estimated_energy_saved_kwh), 2) AS total_energy_saved_kwh,\r\n",
+        "  ROUND(SUM(estimated_cost_saved_rm), 2) AS total_cost_saved_rm\r\n",
+        "FROM hvacapp_dev3.curated.gold_hvac_daily_savings_v3;"
+      ]
+    },
+    {
+      "name": "984bac61",
+      "displayName": "trend_actual_vs_baseline_power",
+      "queryLines": [
+        "SELECT\r\n",
+        "  event_ts,\r\n",
+        "  actual_power_kw,\r\n",
+        "  baseline_power_kw\r\n",
+        "FROM hvacapp_dev3.curated.gold_hvac_interval_savings\r\n",
+        "ORDER BY event_ts;"
+      ]
+    },
+    {
+      "name": "a9907bd5",
+      "displayName": "trend_power_saving",
+      "queryLines": [
+        "SELECT\r\n",
+        "  event_ts,\r\n",
+        "  power_saving_kw,\r\n",
+        "  power_saving_pct\r\n",
+        "FROM hvacapp_dev3.curated.gold_hvac_interval_savings\r\n",
+        "ORDER BY event_ts;"
+      ]
+    },
+    {
+      "name": "db80ad66",
+      "displayName": "daily_savings_summary",
+      "queryLines": [
+        "SELECT\r\n",
+        "  event_date,\r\n",
+        "  avg_actual_power_kw,\r\n",
+        "  avg_baseline_power_kw,\r\n",
+        "  avg_power_saving_kw,\r\n",
+        "  avg_power_saving_pct,\r\n",
+        "  estimated_energy_saved_kwh,\r\n",
+        "  estimated_cost_saved_rm\r\n",
+        "FROM hvacapp_dev3.curated.gold_hvac_daily_savings_v3\r\n",
+        "ORDER BY event_date;"
+      ]
+    },
+    {
+      "name": "8a640654",
+      "displayName": "daily_kpi_table",
+      "queryLines": [
+        "SELECT\r\n",
+        "  event_date,\r\n",
+        "  site_id,\r\n",
+        "  building_id,\r\n",
+        "  hvac_system_id,\r\n",
+        "  avg_actual_power_kw,\r\n",
+        "  avg_baseline_power_kw,\r\n",
+        "  avg_power_saving_kw,\r\n",
+        "  avg_power_saving_pct,\r\n",
+        "  estimated_energy_saved_kwh,\r\n",
+        "  estimated_cost_saved_rm,\r\n",
+        "  total_records\r\n",
+        "FROM hvacapp_dev3.curated.gold_hvac_daily_savings_v3\r\n",
+        "ORDER BY event_date DESC;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "3bd85055",
+      "displayName": "Global Filters",
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "a6c48706",
+      "displayName": "Efficiency Dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "avg-actual-power",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "58a6808d",
+                  "fields": [
+                    {
+                      "name": "avg(avg_actual_power_kw)",
+                      "expression": "AVG(`avg_actual_power_kw`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`avg_actual_power_kw`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Avg Actual Power (kW)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(avg_actual_power_kw)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "1653ab31",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "58a6808d",
+                  "fields": [
+                    {
+                      "name": "avg(avg_baseline_power_kw)",
+                      "expression": "AVG(`avg_baseline_power_kw`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`avg_baseline_power_kw`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Avg Baseline Power (kW)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(avg_baseline_power_kw)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "c4ddf0d2",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "58a6808d",
+                  "fields": [
+                    {
+                      "name": "avg(avg_power_saving_pct)",
+                      "expression": "AVG(`avg_power_saving_pct`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`avg_power_saving_pct`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Avg Power Saving %"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "avg(avg_power_saving_pct)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 5,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "a9873c02",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "58a6808d",
+                  "fields": [
+                    {
+                      "name": "sum(total_energy_saved_kwh)",
+                      "expression": "SUM(`total_energy_saved_kwh`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`total_energy_saved_kwh`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Total Energy Saved (kWh)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_energy_saved_kwh)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "b75ce2ea",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "58a6808d",
+                  "fields": [
+                    {
+                      "name": "sum(total_cost_saved_rm)",
+                      "expression": "SUM(`total_cost_saved_rm`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`total_cost_saved_rm`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Total Cost Saved (RM)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_cost_saved_rm)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "actual-vs-baseline",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "984bac61",
+                  "fields": [
+                    {
+                      "name": "secondly(event_ts)",
+                      "expression": "DATE_TRUNC(\"SECOND\", `event_ts`)"
+                    },
+                    {
+                      "name": "actual_power_kw",
+                      "expression": "`actual_power_kw`"
+                    },
+                    {
+                      "name": "baseline_power_kw",
+                      "expression": "`baseline_power_kw`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Actual vs. Baseline Power Trend"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "secondly(event_ts)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "fields": [
+                    {
+                      "fieldName": "actual_power_kw"
+                    },
+                    {
+                      "fieldName": "baseline_power_kw"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 2,
+            "width": 5,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "1314d752",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a9907bd5",
+                  "fields": [
+                    {
+                      "name": "secondly(event_ts)",
+                      "expression": "DATE_TRUNC(\"SECOND\", `event_ts`)"
+                    },
+                    {
+                      "name": "power_saving_kw",
+                      "expression": "`power_saving_kw`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Power Saving Trend (kW)"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "secondly(event_ts)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "power_saving_kw",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 5,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "faccd87f",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a9907bd5",
+                  "fields": [
+                    {
+                      "name": "secondly(event_ts)",
+                      "expression": "DATE_TRUNC(\"SECOND\", `event_ts`)"
+                    },
+                    {
+                      "name": "power_saving_pct",
+                      "expression": "`power_saving_pct`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Power Saving Trend (%)"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "secondly(event_ts)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "power_saving_pct",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 7,
+            "width": 5,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "daily-cost-saved-rm",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "db80ad66",
+                  "fields": [
+                    {
+                      "name": "daily(event_date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `event_date`)"
+                    },
+                    {
+                      "name": "estimated_energy_saved_kwh",
+                      "expression": "`estimated_energy_saved_kwh`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Daily Energy Saved (kW)"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(event_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "estimated_energy_saved_kwh",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 7,
+            "width": 5,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "e2e41bb9",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "db80ad66",
+                  "fields": [
+                    {
+                      "name": "daily(event_date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `event_date`)"
+                    },
+                    {
+                      "name": "estimated_cost_saved_rm",
+                      "expression": "`estimated_cost_saved_rm`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Daily Cost Saved (RM)"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(event_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "estimated_cost_saved_rm",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 12,
+            "width": 5,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "9c3aa6cb",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "db80ad66",
+                  "fields": [
+                    {
+                      "name": "daily(event_date)",
+                      "expression": "DATE_TRUNC(\"DAY\", `event_date`)"
+                    },
+                    {
+                      "name": "avg_actual_power_kw",
+                      "expression": "`avg_actual_power_kw`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": true,
+                "title": "Daily Actual vs. Baseline Power"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "daily(event_date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg_actual_power_kw",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 12,
+            "width": 5,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "daily-kpi-detail-table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "8a640654",
+                  "fields": [
+                    {
+                      "name": "event_date",
+                      "expression": "`event_date`"
+                    },
+                    {
+                      "name": "building_id",
+                      "expression": "`building_id`"
+                    },
+                    {
+                      "name": "hvac_system_id",
+                      "expression": "`hvac_system_id`"
+                    },
+                    {
+                      "name": "total_records",
+                      "expression": "`total_records`"
+                    },
+                    {
+                      "name": "estimated_energy_saved_kwh",
+                      "expression": "`estimated_energy_saved_kwh`"
+                    },
+                    {
+                      "name": "estimated_cost_saved_rm",
+                      "expression": "`estimated_cost_saved_rm`"
+                    },
+                    {
+                      "name": "avg_power_saving_kw",
+                      "expression": "`avg_power_saving_kw`"
+                    },
+                    {
+                      "name": "avg_power_saving_pct",
+                      "expression": "`avg_power_saving_pct`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "title": "Daily KPI Detail Table"
+              },
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "event_date"
+                  },
+                  {
+                    "fieldName": "building_id"
+                  },
+                  {
+                    "fieldName": "hvac_system_id"
+                  },
+                  {
+                    "fieldName": "total_records"
+                  },
+                  {
+                    "fieldName": "estimated_energy_saved_kwh"
+                  },
+                  {
+                    "fieldName": "estimated_cost_saved_rm"
+                  },
+                  {
+                    "fieldName": "avg_power_saving_kw"
+                  },
+                  {
+                    "fieldName": "avg_power_saving_pct"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 1,
+            "y": 17,
+            "width": 10,
+            "height": 5
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
