@@ -761,6 +761,18 @@
                     {
                       "name": "avg_power_saving_pct",
                       "expression": "`avg_power_saving_pct`"
+                    },
+                    {
+                      "name": "avg_baseline_power_kw",
+                      "expression": "`avg_baseline_power_kw`"
+                    },
+                    {
+                      "name": "avg_actual_power_kw",
+                      "expression": "`avg_actual_power_kw`"
+                    },
+                    {
+                      "name": "site_id",
+                      "expression": "`site_id`"
                     }
                   ],
                   "disaggregated": true
@@ -799,6 +811,15 @@
                   },
                   {
                     "fieldName": "avg_power_saving_pct"
+                  },
+                  {
+                    "fieldName": "avg_baseline_power_kw"
+                  },
+                  {
+                    "fieldName": "avg_actual_power_kw"
+                  },
+                  {
+                    "fieldName": "site_id"
                   }
                 ]
               }
