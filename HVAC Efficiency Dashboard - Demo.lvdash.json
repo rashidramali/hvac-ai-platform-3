@@ -124,7 +124,7 @@
             }
           },
           "position": {
-            "x": 1,
+            "x": 0,
             "y": 0,
             "width": 2,
             "height": 2
@@ -169,7 +169,7 @@
             }
           },
           "position": {
-            "x": 3,
+            "x": 2,
             "y": 0,
             "width": 2,
             "height": 2
@@ -214,7 +214,7 @@
             }
           },
           "position": {
-            "x": 5,
+            "x": 4,
             "y": 0,
             "width": 2,
             "height": 2
@@ -248,7 +248,7 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": false,
-                "title": "Total Energy Saved (kWh)"
+                "title": "Total Energy Saved (kW)"
               },
               "widgetType": "counter",
               "encodings": {
@@ -259,7 +259,7 @@
             }
           },
           "position": {
-            "x": 7,
+            "x": 6,
             "y": 0,
             "width": 2,
             "height": 2
@@ -272,16 +272,11 @@
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "58a6808d",
+                  "datasetName": "8a640654",
                   "fields": [
                     {
-                      "name": "sum(total_cost_saved_rm)",
-                      "expression": "SUM(`total_cost_saved_rm`)"
-                    }
-                  ],
-                  "filters": [
-                    {
-                      "expression": "IN_RANGE(`total_cost_saved_rm`, NULL, NULL)"
+                      "name": "countdistinct(event_date)",
+                      "expression": "COUNT(DISTINCT `event_date`)"
                     }
                   ],
                   "disaggregated": false
@@ -293,18 +288,18 @@
               "frame": {
                 "showTitle": true,
                 "showDescription": false,
-                "title": "Total Cost Saved (RM)"
+                "title": "Total Run Days"
               },
               "widgetType": "counter",
               "encodings": {
                 "value": {
-                  "fieldName": "sum(total_cost_saved_rm)"
+                  "fieldName": "countdistinct(event_date)"
                 }
               }
             }
           },
           "position": {
-            "x": 9,
+            "x": 10,
             "y": 0,
             "width": 2,
             "height": 2
@@ -367,9 +362,9 @@
             }
           },
           "position": {
-            "x": 1,
+            "x": 0,
             "y": 2,
-            "width": 5,
+            "width": 6,
             "height": 5
           }
         },
@@ -421,7 +416,7 @@
           "position": {
             "x": 6,
             "y": 2,
-            "width": 5,
+            "width": 6,
             "height": 5
           }
         },
@@ -471,9 +466,9 @@
             }
           },
           "position": {
-            "x": 1,
+            "x": 0,
             "y": 7,
-            "width": 5,
+            "width": 6,
             "height": 5
           }
         },
@@ -569,7 +564,7 @@
           "position": {
             "x": 6,
             "y": 7,
-            "width": 5,
+            "width": 6,
             "height": 5
           }
         },
@@ -663,10 +658,10 @@
             }
           },
           "position": {
-            "x": 1,
+            "x": 0,
             "y": 12,
-            "width": 5,
-            "height": 5
+            "width": 6,
+            "height": 3
           }
         },
         {
@@ -717,8 +712,8 @@
           "position": {
             "x": 6,
             "y": 12,
-            "width": 5,
-            "height": 5
+            "width": 6,
+            "height": 3
           }
         },
         {
@@ -826,10 +821,55 @@
             }
           },
           "position": {
-            "x": 1,
-            "y": 17,
-            "width": 10,
-            "height": 5
+            "x": 0,
+            "y": 15,
+            "width": 12,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "fdea83a4",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "58a6808d",
+                  "fields": [
+                    {
+                      "name": "sum(total_cost_saved_rm)",
+                      "expression": "SUM(`total_cost_saved_rm`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`total_cost_saved_rm`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true,
+                "showDescription": false,
+                "title": "Total Cost Saved (RM)"
+              },
+              "widgetType": "counter",
+              "encodings": {
+                "value": {
+                  "fieldName": "sum(total_cost_saved_rm)"
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 8,
+            "y": 0,
+            "width": 2,
+            "height": 2
           }
         }
       ],
